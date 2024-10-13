@@ -1,4 +1,5 @@
-import { CanvasWindow, TextWindow, KeyBehaviour } from '/GE.min.js';
+import {CanvasWindow, TextWindow, KeyBehaviour} from '/GE.js'; 
+
 
 window.assetsLoaded = 0;
 

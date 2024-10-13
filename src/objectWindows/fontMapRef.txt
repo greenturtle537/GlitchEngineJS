@@ -1,3 +1,5 @@
-const fontMap = 
-    ` ☺☻♥♦♣♠•◘○◙♂♀♪♫☼►◄↕‼¶§▬↨↑↓→←∟↔▲▼ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`; 
-        //fontMap is for reference only. These characters will not translate through file systems properly.
+const fontMap = ` ☺☻♥♦♣♠•◘○◙♂♀♪♫☼►◄↕‼¶§▬↨↑↓→←∟↔▲▼ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`; 
+
+
+fontMap is for reference only. These characters will not translate through file systems properly.
+Do not try to upload this string into our build tool or jsmin will have a heart attack part-way through processing.

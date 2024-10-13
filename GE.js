@@ -169,6 +169,7 @@ class GraphicWindow {
 
 }
 
+window.assetsLoaded = 0;
 
 class TextWindow extends GraphicWindow {
 
