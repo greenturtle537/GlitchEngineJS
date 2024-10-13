@@ -57,9 +57,7 @@ class TextWindow extends GraphicWindow {
     drawText(text, x, y, color=0, center=false) {
         const fontWidth = 8;
         const fontHeight = 8;
-        const fontMap = 
-    ` ☺☻♥♦♣♠•◘○◙♂♀♪♫☼►◄↕‼¶§▬↨↑↓→←∟↔▲▼ !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\`abcdefghijklmnopqrstuvwxyz{|}~`; 
-        //fontMap is for reference only. These characters will not translate through file systems properly.
+        
         const fontCodeMap = [
             32,9786,9787,9829,9830,9827,9824,8226,9688,9675,9689,9794,9792,9834,9835,9788,
             9658,9668,8597,8252,182,167,9644,8616,8593,8595,8594,8592,8735,8596,9650,9660,

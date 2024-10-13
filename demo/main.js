@@ -1,5 +1,4 @@
-import {CanvasWindow, TextWindow, KeyBehaviour} from '../GlitchEngine.js'; 
-
+import { CanvasWindow, TextWindow, KeyBehaviour } from '/GE.min.js';
 
 window.assetsLoaded = 0;
 
