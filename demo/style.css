@@ -1,0 +1,43 @@
+canvas {
+    background-color: #000000;
+    image-rendering: pixelated;
+    object-fit: contain;
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #000000;
+}
+
+button {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 48px;
+    font-weight: bold;
+}
+#play-button {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+#play-button.hidden {
+    display: none;
+}
+img {
+    display: none;
+}
+
+#white-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    z-index: 9999;
+}
