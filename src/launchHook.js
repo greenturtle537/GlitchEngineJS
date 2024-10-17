@@ -1,4 +1,4 @@
-import { CanvasWindow, TextWindow } from "../GlitchEngine";
+import { CanvasWindow, TextWindow } from "../GlitchEngine.js";
 
 class LaunchHook {
     static viewFullScreen = document.getElementById("play-button");
