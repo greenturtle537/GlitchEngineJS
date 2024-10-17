@@ -6,10 +6,12 @@ output_file = 'GE.js'
 excluded_files = []
 glitch_engine_file = 'GlitchEngine.js'
 load_order = [
+    '../runtimeInject.js',
     'objectWindows/CanvasWindow.js',
     'objectWindows/GraphicWindow.js',
     'objectWindows/TextWindow.js',
     'keyBehaviour/keyBehaviour.js'
+    'launchHook.js',
 ]
 
 def read_and_merge_files(src_directory, excluded_files, output_file, glitch_engine_file, load_order):
