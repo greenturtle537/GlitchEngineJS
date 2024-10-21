@@ -1,3 +1,5 @@
+import { createElementNS, createCanvasElement } from "./utils.js";
+
 class CanvasWindow {
 
     static canvasContainer = document.getElementById('canvas-container');

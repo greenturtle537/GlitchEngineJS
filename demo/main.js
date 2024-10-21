@@ -1,4 +1,4 @@
-import {CanvasWindow, TextWindow, KeyBehaviour} from '/GE.js'; 
+import {CanvasWindow, TextWindow, KeyBehaviour, LaunchHook} from '/GE.js'; 
 
 
 window.assetsLoaded = 0;

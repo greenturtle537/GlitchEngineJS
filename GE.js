@@ -1,3 +1,218 @@
+class runtimeInject {
+    static css = `
+    canvas {
+        background-color: #000000;
+        image-rendering: pixelated;
+        object-fit: contain;
+        left: 0;
+        top: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: #000000;
+    }
+
+    button {
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        background-color: #ffffff;
+        color: #000000;
+        font-size: 48px;
+        font-weight: bold;
+    }
+    #play-button {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+    }
+    #play-button.hidden {
+        display: none;
+    }
+    img {
+        display: none;
+    }
+
+    #white-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: white;
+        z-index: 9999;
+    }
+
+    #black-box {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2; /* Ensure it is behind the #white-text */
+    }
+
+    #spinner {
+        width: 300px; /* Adjust to match the button size */
+        height: 300px; /* Adjust to match the button size */
+        background-color: #fff; /* Solid background */
+        position: absolute;
+        top: 40%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #spinner p {
+        margin: 0;
+        color: #000;
+        font-size: 32px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .hidden {
+        display: none;
+    }
+    `;
+    static html = `
+    <div id="blit-canvas-container"></div>
+    <div id="canvas-container"></div>
+    <button id="play-button">Play</button>
+    <div id="black-box">
+        <div id="spinner">
+            <p>Game is Loading!</p>
+        </div>
+    </div>
+    `;
+    static inject() {
+        const style = document.createElement('style');
+        style.textContent = this.css;
+        document.head.appendChild(style);
+
+        document.body.insertAdjacentHTML('afterbegin', this.html);
+    }
+}
+
+//runtimeInject.inject(); //This will inject code during runtime, rely on GlitchEngineJS for injection during dev runtimes
+
+function createElementNS( name ) {
+
+	return document.createElementNS( 'http://www.w3.org/1999/xhtml', name );
+
+}
+
+function createCanvasElement() {
+
+    const canvas = createElementNS( 'canvas' );
+    canvas.style.display = 'block';
+    canvas.style.backgroundColor = '#000000';
+    canvas.style.imageRendering = 'pixelated';
+    canvas.style.objectFit = 'contain';
+    canvas.style.left = '0';
+    canvas.style.top = '0';
+    canvas.style.margin = '0';
+    return canvas;
+
+}
+
+class KeyBehaviour {
+    static menuBehaviour = (textWindow=null) => {
+        let menuPos = 0;
+        let typingOn = false;
+        let overflowNotPermitted = true;
+        let typingPositionX = 0;
+        let typingPositionY = 0;
+        let command = "";
+        let flag = 1;
+        
+        console.log("KeyListener Loaded");
+        document.addEventListener("keydown", function(event) {
+            const key = event.key;
+
+            if (flag === 1) {
+                if  ((key === "w" || key === "s") && (menuPos != -1 && menuPos != 4)) {
+                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 0);
+                    console.log("drawn");
+                }
+                if ( key === "w" && menuPos != 0) {
+                    menuPos--;
+                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 15);
+                } else if (key === "s" && menuPos != 3) {
+                    menuPos++;
+                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 15);
+                } else if (key === "Enter") {
+                    if (menuPos === 0) {
+                        // Start
+                        textWindow.drawText("An Error Occured", 272, 0, 12);
+                        flag++;
+                        textWindow.clearScreen();
+                        introSeq();
+                    } else if (menuPos === 1) {
+                        // Load
+                    } else if (menuPos === 2) {
+                        // Options
+                        textWindow.drawText("An Error Occured", 272, 0, 12);
+                    } else if (menuPos === 3) {
+                        // Exit
+                        textWindow.drawText("An Error Occured", 272, 0, 12);
+                    }
+                }
+            } else if (flag === 2) {
+                if (typingOn && overflowNotPermitted) {
+                    if (key.length === 1 && typingPositionX < 640) {
+                        textWindow.drawText(key, typingPositionX, typingPositionY);
+                        typingPositionX += 8;
+                        command += key;
+                    } else if (key === "Backspace" && typingPositionX > 0) {
+                        typingPositionX -= 8;
+                        textWindow.drawText(" ", typingPositionX, typingPositionY);
+                        command = command.slice(0, -1);
+                    } else if (key === "Enter") {
+                        textWindow.drawText("                                                                                ", 0, typingPositionY);
+                        typingPositionX = 0;
+                        //evalCommand(command);
+                    }
+                } else if (typingOn && !overflowNotPermitted) {
+                    if (key.length === 1) {
+                        // Handle single character input here
+                        if (typingOn) {
+                        textWindow.drawText(key, typingPositionX, typingPositionY);
+                        typingPositionX += 8;
+                        if (typingPositionX >= 632) {
+                            typingPositionX = 0;
+                            typingPositionY += 8;
+                        }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    static getBehaviour(behaviourName, ...args) {
+        if (behaviourName === 'menu') {
+            return KeyBehaviour.menuBehaviour;
+        }
+        // Add other behaviours as needed
+        return null;
+    }
+}
+
+
 class CanvasWindow {
 
     static canvasContainer = document.getElementById('canvas-container');
@@ -169,11 +384,14 @@ class GraphicWindow {
 
 }
 
-window.assetsLoaded = 0;
 
 class TextWindow extends GraphicWindow {
 
     static fonts = [];
+    static baseFontURI = "data:image/png;base64,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" 
+    static baseFont;
+
+    static assetsLoaded = 0;
 
     static colors = [
         // index 0 == white
@@ -228,7 +446,6 @@ class TextWindow extends GraphicWindow {
     drawText(text, x, y, color=0, center=false) {
         const fontWidth = 8;
         const fontHeight = 8;
-        
         const fontCodeMap = [
             32,9786,9787,9829,9830,9827,9824,8226,9688,9675,9689,9794,9792,9834,9835,9788,
             9658,9668,8597,8252,182,167,9644,8616,8593,8595,8594,8592,8735,8596,9650,9660,
@@ -250,6 +467,19 @@ class TextWindow extends GraphicWindow {
             this.ctx.drawImage(this, TextWindow.fonts[color], sx, sy, fontWidth, fontHeight, xPos, y, fontWidth, fontHeight);
         }
         this.ctx.blitBuffer();
+    }
+
+    static initFont() {
+        let font = new Image();
+        font.src = TextWindow.baseFontURI;
+        font.onload = function() {
+            TextWindow.assetsLoaded++;
+        }
+        return font;
+    }
+
+    static setAssetsLoaded(assetsLoaded) {
+        TextWindow.assetsLoaded = assetsLoaded;
     }
 
     static colorCodeConvert(colorCode) {
@@ -298,7 +528,7 @@ class TextWindow extends GraphicWindow {
                 const bgcolor = TextWindow.colorCodeConvert(bgcolorCode);
                 const convertedFont = TextWindow.convertWhitePixelsToColor(font, color, bgcolor);
                 convertedFont.onload = function() {
-                    assetsLoaded++;
+                    this.assetsLoaded++;
                 }
                 TextWindow.fonts.push(convertedFont);
             }
@@ -306,86 +536,29 @@ class TextWindow extends GraphicWindow {
     }
 }
 
-class KeyBehaviour {
-    static menuBehaviour = (textWindow=null) => {
-        let menuPos = 0;
-        let typingOn = false;
-        let overflowNotPermitted = true;
-        let typingPositionX = 0;
-        let typingPositionY = 0;
-        let command = "";
-        let flag = 1;
-        
-        console.log("KeyListener Loaded");
-        document.addEventListener("keydown", function(event) {
-            const key = event.key;
 
-            if (flag === 1) {
-                if  ((key === "w" || key === "s") && (menuPos != -1 && menuPos != 4)) {
-                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 0);
-                    console.log("drawn");
-                }
-                if ( key === "w" && menuPos != 0) {
-                    menuPos--;
-                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 15);
-                } else if (key === "s" && menuPos != 3) {
-                    menuPos++;
-                    textWindow.drawText(">", 0, 0+(16*(menuPos+1)), 15);
-                } else if (key === "Enter") {
-                    if (menuPos === 0) {
-                        // Start
-                        textWindow.drawText("An Error Occured", 272, 0, 12);
-                        flag++;
-                        textWindow.clearScreen();
-                        introSeq();
-                    } else if (menuPos === 1) {
-                        // Load
-                    } else if (menuPos === 2) {
-                        // Options
-                        textWindow.drawText("An Error Occured", 272, 0, 12);
-                    } else if (menuPos === 3) {
-                        // Exit
-                        textWindow.drawText("An Error Occured", 272, 0, 12);
-                    }
-                }
-            } else if (flag === 2) {
-                if (typingOn && overflowNotPermitted) {
-                    if (key.length === 1 && typingPositionX < 640) {
-                        textWindow.drawText(key, typingPositionX, typingPositionY);
-                        typingPositionX += 8;
-                        command += key;
-                    } else if (key === "Backspace" && typingPositionX > 0) {
-                        typingPositionX -= 8;
-                        textWindow.drawText(" ", typingPositionX, typingPositionY);
-                        command = command.slice(0, -1);
-                    } else if (key === "Enter") {
-                        textWindow.drawText("                                                                                ", 0, typingPositionY);
-                        typingPositionX = 0;
-                        //evalCommand(command);
-                    }
-                } else if (typingOn && !overflowNotPermitted) {
-                    if (key.length === 1) {
-                        // Handle single character input here
-                        if (typingOn) {
-                        textWindow.drawText(key, typingPositionX, typingPositionY);
-                        typingPositionX += 8;
-                        if (typingPositionX >= 632) {
-                            typingPositionX = 0;
-                            typingPositionY += 8;
-                        }
-                        }
-                    }
-                }
-            }
-        });
+class LaunchHook {
+    static viewFullScreen = document.getElementById("play-button");
+    static spinner = document.getElementById('black-box');
+    static showSpinner() {
+        this.spinner.style.display = 'flex';
     }
-
-    static getBehaviour(behaviourName, ...args) {
-        if (behaviourName === 'menu') {
-            return KeyBehaviour.menuBehaviour;
+    static hideSpinner() {
+        this.spinner.style.display = 'none';
+    }
+    static buttonHook(callback) {
+        if (this.viewFullScreen) {
+            this.viewFullScreen.addEventListener("click", function() {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+                CanvasWindow.fullscreenSetup(this.viewFullScreen);
+            });
         }
-        // Add other behaviours as needed
-        return null;
+    }   
+    static async fontHook(callback) {
+        this.showSpinner();
+        TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);callback();} //Super readable, right?
     }
 }
 

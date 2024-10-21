@@ -81,4 +81,4 @@ class KeyBehaviour {
     }
 }
 
-export {KeyBehaviour};
+export { KeyBehaviour };

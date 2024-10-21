@@ -7,10 +7,11 @@ excluded_files = []
 glitch_engine_file = 'GlitchEngine.js'
 load_order = [
     '../runtimeInject.js',
+    "utils.js",
+    'keyBehaviour/keyBehaviour.js',
     'objectWindows/CanvasWindow.js',
     'objectWindows/GraphicWindow.js',
     'objectWindows/TextWindow.js',
-    'keyBehaviour/keyBehaviour.js'
     'launchHook.js',
 ]
 

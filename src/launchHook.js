@@ -20,6 +20,7 @@ class LaunchHook {
         }
     }   
     static async fontHook(callback) {
+        console.log("Trying font hook");
         this.showSpinner();
         TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);callback();} //Super readable, right?
     }

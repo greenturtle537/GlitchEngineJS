@@ -107,6 +107,6 @@ class runtimeInject {
     }
 }
 
-runtimeInject.inject(); //This will inject code during runtime, rely on GlitchEngineJS for injection during dev runtimes
+//runtimeInject.inject(); //This will inject code during runtime, rely on GlitchEngineJS for injection during dev runtimes
 
 export { runtimeInject }; //Export the runtimeInject class for use in the GlitchEngineJS runtime
