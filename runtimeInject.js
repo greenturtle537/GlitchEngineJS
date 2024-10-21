@@ -1,14 +1,5 @@
 class runtimeInject {
     static css = `
-    canvas {
-        background-color: #000000;
-        image-rendering: pixelated;
-        object-fit: contain;
-        left: 0;
-        top: 0;
-        margin: 0;
-    }
-
     body {
         background-color: #000000;
     }
@@ -89,8 +80,6 @@ class runtimeInject {
     }
     `;
     static html = `
-    <div id="blit-canvas-container"></div>
-    <div id="canvas-container"></div>
     <button id="play-button">Play</button>
     <div id="black-box">
         <div id="spinner">
