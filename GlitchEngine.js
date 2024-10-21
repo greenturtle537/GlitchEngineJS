@@ -6,6 +6,6 @@ import {TextWindow} from "./src/objectWindows/TextWindow.js";
 import { LaunchHook } from "./src/launchHook.js";
 
 import { runtimeInject } from "./runtimeInject.js";
-import { createElementNS, createCanvasElement } from "./utils.js";
+import { createElementNS, createCanvasElement } from "./src/utils.js";
 
 export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, createCanvasElement, createElementNS };
