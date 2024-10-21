@@ -8,4 +8,4 @@ import { LaunchHook } from "./src/launchHook.js";
 import { runtimeInject } from "./runtimeInject.js";
 import { createElementNS, createCanvasElement } from "./src/utils.js";
 
-export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, createCanvasElement, createElementNS };
+export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, runtimeInject, createCanvasElement, createElementNS };
