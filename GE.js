@@ -215,11 +215,11 @@ class KeyBehaviour {
 
 class CanvasWindow {
 
-    static canvasContainer = document.getElementById('canvas-container');
-    static canvas = document.createElement('canvas');
+    // static canvasContainer = document.getElementById('canvas-container');
+    static canvas = createCanvasElement();
     static ctx = CanvasWindow.canvas.getContext('2d');
-    static blitCanvasContainer = document.getElementById('blit-canvas-container');
-    static blitCanvas = document.createElement('canvas');
+    // static blitCanvasContainer = document.getElementById('blit-canvas-container');
+    static blitCanvas = createCanvasElement();
     static blitctx = CanvasWindow.blitCanvas.getContext('2d');
     static nearestX = 0;
     static nearestY = 0;
@@ -557,9 +557,10 @@ class LaunchHook {
         }
     }   
     static async fontHook(callback) {
+        console.log("Trying font hook");
         this.showSpinner();
         TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);callback();} //Super readable, right?
     }
 }
 
-export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour };
+export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, createCanvasElement, createElementNS };
