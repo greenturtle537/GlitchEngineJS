@@ -1,4 +1,4 @@
-import { createElementNS, createCanvasElement } from "./utils.js";
+import { createElementNS, createCanvasElement } from "../utils.js";
 
 class CanvasWindow {
 
