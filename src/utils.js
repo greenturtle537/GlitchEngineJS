@@ -6,7 +6,7 @@ function createElementNS( name ) {
 
 function createCanvasElement() {
 
-    const canvas = createElementNS( 'canvas' );
+    const canvas = createElementNS('canvas');
     //canvas.style.display = 'block';
     canvas.style.backgroundColor = '#000000';
     canvas.style.imageRendering = 'pixelated';
