@@ -1,14 +1,5 @@
 class runtimeInject {
     static css = `
-    canvas {
-        background-color: #000000;
-        image-rendering: pixelated;
-        object-fit: contain;
-        left: 0;
-        top: 0;
-        margin: 0;
-    }
-
     body {
         background-color: #000000;
     }
@@ -89,8 +80,6 @@ class runtimeInject {
     }
     `;
     static html = `
-    <div id="blit-canvas-container"></div>
-    <div id="canvas-container"></div>
     <button id="play-button">Play</button>
     <div id="black-box">
         <div id="spinner">
@@ -117,8 +106,8 @@ function createElementNS( name ) {
 
 function createCanvasElement() {
 
-    const canvas = createElementNS( 'canvas' );
-    canvas.style.display = 'block';
+    const canvas = createElementNS('canvas');
+    //canvas.style.display = 'block';
     canvas.style.backgroundColor = '#000000';
     canvas.style.imageRendering = 'pixelated';
     canvas.style.objectFit = 'contain';
@@ -233,7 +222,7 @@ class CanvasWindow {
         
         CanvasWindow.canvas.width = width+16;
         CanvasWindow.canvas.height = height+16;
-        document.body.appendChild(CanvasWindow.canvas);
+        document.appendChild(CanvasWindow.canvas);
 
         CanvasWindow.blitctx.canvas.width = width;
         CanvasWindow.blitctx.canvas.height = height;
@@ -563,4 +552,4 @@ class LaunchHook {
     }
 }
 
-export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, createCanvasElement, createElementNS };
+export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, runtimeInject, createCanvasElement, createElementNS };
