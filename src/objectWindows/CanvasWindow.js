@@ -20,7 +20,7 @@ class CanvasWindow {
         
         CanvasWindow.canvas.width = width+16;
         CanvasWindow.canvas.height = height+16;
-        document.appendChild(CanvasWindow.canvas);
+        document.body.appendChild(CanvasWindow.canvas);
 
         CanvasWindow.blitctx.canvas.width = width;
         CanvasWindow.blitctx.canvas.height = height;
@@ -39,7 +39,7 @@ class CanvasWindow {
         CanvasWindow.clearScreen();
     }
 
-    getMousePos(canvas, evt) {
+    static getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect(), // abs. size of element
             scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for x
             scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for y
