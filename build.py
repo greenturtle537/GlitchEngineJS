@@ -12,7 +12,7 @@ load_order = [
     'objectWindows/CanvasWindow.js',
     'objectWindows/GraphicWindow.js',
     'objectWindows/TextWindow.js',
-    'launchHook.js',
+    'LaunchHook.js',
 ]
 
 def read_and_merge_files(src_directory, excluded_files, output_file, glitch_engine_file, load_order):
@@ -34,7 +34,7 @@ def read_and_merge_files(src_directory, excluded_files, output_file, glitch_engi
             lines = f.readlines()
             if lines:
                 last_line = lines[-1]
-                merged_content.append(last_line)
+                merged_content.append("\nruntimeInject.inject();\n"+last_line) # This is super cool and stable
 
     # Ensure the output file is created if it doesn't exist
     if not os.path.exists(output_file):

@@ -1,7 +1,11 @@
 class runtimeInject {
     static css = `
     body {
-        background-color: #000000;
+        background-color:rgb(255, 0, 0);
+        width: 100vw; 
+        height: 150vh;
+        margin: 0;
+        padding: 0;
     }
 
     button {
@@ -13,6 +17,7 @@ class runtimeInject {
         font-size: 48px;
         font-weight: bold;
     }
+    
     #play-button {
         position: fixed;
         top: 50%;
@@ -32,17 +37,27 @@ class runtimeInject {
         top: 0;
         left: 0;
         color: white;
-        z-index: 9999;
+        z-index: 3;
+    }
+    
+    #loading-box {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: lime;
+        z-index: 1;
     }
 
     #black-box {
         display: none;
-        width: 100vw;
-        height: 100vh;
-        background-color: black;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: lime;
         z-index: 2; /* Ensure it is behind the #white-text */
     }
 
@@ -78,12 +93,119 @@ class runtimeInject {
     .hidden {
         display: none;
     }
+
+    canvas {
+        display: none;
+    }
+
+    .pixelCon {
+        position: absolute;
+        width: 120%;  height: 120%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+    }
+
+    .pixel {
+        background: black;
+        width: 10%;
+        padding-top: 10%;
+        float: left;
+        opacity: 0.0;
+        animation: blink 5s infinite;
+    }
+
+    @keyframes blink {
+        0%    {opacity: 0.0;}
+        25%   {opacity: 0.0;}
+        50%   {opacity: 0.5;}
+        100%  {opacity: 0.0;}
+    }
     `;
     static html = `
     <button id="play-button">Play</button>
     <div id="black-box">
         <div id="spinner">
             <p>Game is Loading!</p>
+        </div>
+        <div class="pixelCon">
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
         </div>
     </div>
     `;
@@ -93,10 +215,13 @@ class runtimeInject {
         document.head.appendChild(style);
 
         document.body.insertAdjacentHTML('afterbegin', this.html);
+
+        var pix = document.getElementsByClassName("pixel");
+        for (var i = 0; i < pix.length; i++) {
+            pix[i].style.animationDelay = Math.ceil(Math.random()*3000)+"ms";
+        }
     }
 }
-
-//runtimeInject.inject(); //This will inject code during runtime, rely on GlitchEngineJS for injection during dev runtimes
 
 function createElementNS( name ) {
 
@@ -298,7 +423,7 @@ class CanvasWindow {
         } else {
             scalefactor = (w * idealWidth) / (h * idealHeight);
         }
-        scalefactor = scalefactor * 98; // Fudge factor to remove scrollbars, trust me on this one.
+        scalefactor = scalefactor * 100; // Fudge factor to remove scrollbars, trust me on this one.
         canvasRule.style.width = scalefactor.toString() + "%";
         canvasRule.style.height = scalefactor.toString() + "%";
         // Center the canvas to the window
@@ -335,8 +460,7 @@ class CanvasWindow {
     static orientationLock() {
         screen.orientation.lock("landscape-primary")
         .catch((error) => {
-            //console.log(`Error: ${error.message}`);
-            console.log("This device doesn't support rotation. Probably because it's a desktop.");
+            console.log(`Error: ${error.message}, This device doesn't support rotation. Probably because it's a desktop.`);
         });
     }
 }
@@ -517,7 +641,8 @@ class TextWindow extends GraphicWindow {
                 const bgcolor = TextWindow.colorCodeConvert(bgcolorCode);
                 const convertedFont = TextWindow.convertWhitePixelsToColor(font, color, bgcolor);
                 convertedFont.onload = function() {
-                    this.assetsLoaded++;
+                    TextWindow.assetsLoaded++;
+                    //console.log(`${TextWindow.assetsLoaded}/256"`);
                 }
                 TextWindow.fonts.push(convertedFont);
             }
@@ -527,29 +652,19 @@ class TextWindow extends GraphicWindow {
 
 
 class LaunchHook {
-    static viewFullScreen = document.getElementById("play-button");
-    static spinner = document.getElementById('black-box');
-    static showSpinner() {
-        this.spinner.style.display = 'flex';
-    }
-    static hideSpinner() {
-        this.spinner.style.display = 'none';
-    }
-    static buttonHook(callback) {
-        if (this.viewFullScreen) {
-            this.viewFullScreen.addEventListener("click", function() {
-                if (typeof callback === 'function') {
-                    callback();
-                }
-                CanvasWindow.fullscreenSetup(this.viewFullScreen);
+    static async buttonHook(promisedFunction) {
+        const viewFullScreen = document.getElementById("play-button");
+        const spinner = document.getElementById('black-box');
+        if (viewFullScreen) {
+            viewFullScreen.addEventListener("click", function() {
+                spinner.style.display = 'flex';
+                TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);spinner.style.display = 'none';promisedFunction();} //Super readable, right?
+                CanvasWindow.fullscreenSetup(viewFullScreen);
             });
         }
-    }   
-    static async fontHook(callback) {
-        console.log("Trying font hook");
-        this.showSpinner();
-        TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);callback();} //Super readable, right?
     }
 }
 
+
+runtimeInject.inject();
 export { CanvasWindow, GraphicWindow, TextWindow, KeyBehaviour, LaunchHook, runtimeInject, createCanvasElement, createElementNS };

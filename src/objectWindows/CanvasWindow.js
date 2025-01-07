@@ -20,7 +20,7 @@ class CanvasWindow {
         
         CanvasWindow.canvas.width = width+16;
         CanvasWindow.canvas.height = height+16;
-        document.appendChild(CanvasWindow.canvas);
+        document.body.appendChild(CanvasWindow.canvas);
 
         CanvasWindow.blitctx.canvas.width = width;
         CanvasWindow.blitctx.canvas.height = height;
@@ -96,7 +96,7 @@ class CanvasWindow {
         } else {
             scalefactor = (w * idealWidth) / (h * idealHeight);
         }
-        scalefactor = scalefactor * 98; // Fudge factor to remove scrollbars, trust me on this one.
+        scalefactor = scalefactor * 100; // Fudge factor to remove scrollbars, trust me on this one.
         canvasRule.style.width = scalefactor.toString() + "%";
         canvasRule.style.height = scalefactor.toString() + "%";
         // Center the canvas to the window
@@ -133,8 +133,7 @@ class CanvasWindow {
     static orientationLock() {
         screen.orientation.lock("landscape-primary")
         .catch((error) => {
-            //console.log(`Error: ${error.message}`);
-            console.log("This device doesn't support rotation. Probably because it's a desktop.");
+            console.log(`Error: ${error.message}, This device doesn't support rotation. Probably because it's a desktop.`);
         });
     }
 }

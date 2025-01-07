@@ -143,7 +143,8 @@ class TextWindow extends GraphicWindow {
                 const bgcolor = TextWindow.colorCodeConvert(bgcolorCode);
                 const convertedFont = TextWindow.convertWhitePixelsToColor(font, color, bgcolor);
                 convertedFont.onload = function() {
-                    this.assetsLoaded++;
+                    TextWindow.assetsLoaded++;
+                    //console.log(`${TextWindow.assetsLoaded}/256"`);
                 }
                 TextWindow.fonts.push(convertedFont);
             }
