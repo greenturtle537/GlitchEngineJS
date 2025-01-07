@@ -84,6 +84,27 @@ class CanvasWindow {
     }
 
     static resizeCanvas() {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const aspectRatio = this.width / this.height;
+    
+        let newWidth = windowWidth;
+        let newHeight = windowWidth / aspectRatio;
+    
+        if (newHeight > windowHeight) {
+            newHeight = windowHeight;
+            newWidth = windowHeight * aspectRatio;
+        }
+    
+        this.canvas.style.width = `${newWidth}px`;
+        this.canvas.style.height = `${newHeight}px`;
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.top = '50%';
+        this.canvas.style.left = '50%';
+        this.canvas.style.transform = 'translate(-50%, -50%)';
+    }
+
+    static oldResizeCanvas() {
         const sheet = document.styleSheets[0];
         const canvasRule = sheet.cssRules[0];
         let w = window.innerWidth;

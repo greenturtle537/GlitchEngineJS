@@ -3,7 +3,7 @@ class runtimeInject {
     body {
         background-color:rgb(255, 0, 0);
         width: 100vw; 
-        height: 150vh;
+        height: 100vh;
         margin: 0;
         padding: 0;
     }

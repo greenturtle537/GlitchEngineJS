@@ -3,7 +3,7 @@ class runtimeInject {
     body {
         background-color:rgb(255, 0, 0);
         width: 100vw; 
-        height: 150vh;
+        height: 100vh;
         margin: 0;
         padding: 0;
     }
@@ -654,11 +654,11 @@ class TextWindow extends GraphicWindow {
 class LaunchHook {
     static async buttonHook(promisedFunction) {
         const viewFullScreen = document.getElementById("play-button");
-        const spinner = document.getElementById('black-box');
+        const box = document.getElementById('black-box');
         if (viewFullScreen) {
             viewFullScreen.addEventListener("click", function() {
-                spinner.style.display = 'flex';
-                TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);spinner.style.display = 'none';promisedFunction();} //Super readable, right?
+                box.style.display = 'flex';
+                TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);box.style.display = 'none';promisedFunction();} //Super readable, right?
                 CanvasWindow.fullscreenSetup(viewFullScreen);
             });
         }
