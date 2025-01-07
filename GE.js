@@ -1,7 +1,7 @@
 class runtimeInject {
     static css = `
     body {
-        background-color:rgb(255, 0, 0);
+        background-color: black;
         width: 100vw; 
         height: 100vh;
         margin: 0;
@@ -25,9 +25,11 @@ class runtimeInject {
         transform: translate(-50%, -50%);
         display: block;
     }
+
     #play-button.hidden {
         display: none;
     }
+    
     img {
         display: none;
     }
@@ -39,22 +41,10 @@ class runtimeInject {
         color: white;
         z-index: 3;
     }
-    
-    #loading-box {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: lime;
-        z-index: 1;
-    }
 
     #black-box {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
         width: 100vw;
         height: 100vh;
         background-color: lime;
@@ -64,7 +54,7 @@ class runtimeInject {
     #spinner {
         width: 300px; /* Adjust to match the button size */
         height: 300px; /* Adjust to match the button size */
-        background-color: #fff; /* Solid background */
+        background-color: #3498db; /* Solid background */
         position: absolute;
         top: 40%;
         left: 40%;
@@ -79,7 +69,7 @@ class runtimeInject {
         text-align: center;
     }
 
-    #spinner p {
+    #spinner b {
         margin: 0;
         color: #000;
         font-size: 32px;
@@ -105,10 +95,11 @@ class runtimeInject {
         left: 50%;
         transform: translate(-50%, -50%);
         overflow: hidden;
+        z-index: 1;
     }
 
     .pixel {
-        background: black;
+        background: lime;
         width: 10%;
         padding-top: 10%;
         float: left;
@@ -124,10 +115,9 @@ class runtimeInject {
     }
     `;
     static html = `
-    <button id="play-button">Play</button>
     <div id="black-box">
         <div id="spinner">
-            <p>Game is Loading!</p>
+            <b>GlitchEngineMK1</b>
         </div>
         <div class="pixelCon">
             <div class="pixel"></div>
@@ -208,6 +198,7 @@ class runtimeInject {
             <div class="pixel"></div>
         </div>
     </div>
+    <button id="play-button">Play</button>
     `;
     static inject() {
         const style = document.createElement('style');
@@ -326,7 +317,6 @@ class KeyBehaviour {
     }
 }
 
-
 class CanvasWindow {
 
     // static canvasContainer = document.getElementById('canvas-container');
@@ -340,7 +330,9 @@ class CanvasWindow {
     static width = 640;
     static height = 400;
 
-    constructor(width, height) {        
+    constructor(width, height, promisedFunction) {
+        
+        LaunchHook.buttonHook(promisedFunction); //So as not to create strange canvas behaviour
 
         CanvasWindow.width = width;
         CanvasWindow.height = height;
@@ -411,6 +403,27 @@ class CanvasWindow {
     }
 
     static resizeCanvas() {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const aspectRatio = this.width / this.height;
+    
+        let newWidth = windowWidth;
+        let newHeight = windowWidth / aspectRatio;
+    
+        if (newHeight > windowHeight) {
+            newHeight = windowHeight;
+            newWidth = windowHeight * aspectRatio;
+        }
+    
+        this.canvas.style.width = `${newWidth}px`;
+        this.canvas.style.height = `${newHeight}px`;
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.top = '50%';
+        this.canvas.style.left = '50%';
+        this.canvas.style.transform = 'translate(-50%, -50%)';
+    }
+
+    static oldResizeCanvas() {
         const sheet = document.styleSheets[0];
         const canvasRule = sheet.cssRules[0];
         let w = window.innerWidth;
@@ -657,8 +670,14 @@ class LaunchHook {
         const box = document.getElementById('black-box');
         if (viewFullScreen) {
             viewFullScreen.addEventListener("click", function() {
+                CanvasWindow.resizeCanvas();
                 box.style.display = 'flex';
-                TextWindow.initFont().onload=async function(){TextWindow.fontLoader(this);box.style.display = 'none';promisedFunction();} //Super readable, right?
+                TextWindow.initFont().onload=async function(){
+                    TextWindow.fontLoader(this);
+                    box.style.display = 'none';
+                    CanvasWindow.canvas.style.display="block";
+                    promisedFunction();
+                } //Super readable, right?
                 CanvasWindow.fullscreenSetup(viewFullScreen);
             });
         }

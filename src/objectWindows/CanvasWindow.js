@@ -1,5 +1,5 @@
 import { createElementNS, createCanvasElement } from "../utils.js";
-
+import { LaunchHook } from "../LaunchHook.js";
 class CanvasWindow {
 
     // static canvasContainer = document.getElementById('canvas-container');
@@ -13,7 +13,9 @@ class CanvasWindow {
     static width = 640;
     static height = 400;
 
-    constructor(width, height) {        
+    constructor(width, height, promisedFunction) {
+        
+        LaunchHook.buttonHook(promisedFunction); //So as not to create strange canvas behaviour
 
         CanvasWindow.width = width;
         CanvasWindow.height = height;
