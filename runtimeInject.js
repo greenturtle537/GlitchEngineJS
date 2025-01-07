@@ -69,7 +69,7 @@ class runtimeInject {
         text-align: center;
     }
 
-    #spinner b {
+    #spinner p {
         margin: 0;
         color: #000;
         font-size: 32px;
@@ -117,7 +117,7 @@ class runtimeInject {
     static html = `
     <div id="black-box">
         <div id="spinner">
-            <b>GlitchEngineMK1</b>
+            <p>GlitchEngineMK1</p>
         </div>
         <div class="pixelCon">
             <div class="pixel"></div>
