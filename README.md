@@ -1,4 +1,4 @@
-# GlitchEngineJS MK1
+# GlitchEngineJS
 First implementation of the GlitchEngineJS.
 
 # Install from-source
