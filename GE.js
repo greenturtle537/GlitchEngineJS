@@ -548,7 +548,7 @@ class TextWindow extends GraphicWindow {
         return rows;
     }
 
-    drawText(text, x, y, color=0, center=false) {
+    drawText(text, x, y, color=[15,0], center=false) {
         const fontWidth = 8;
         const fontHeight = 16;
         const fontCodeMap = [
@@ -579,7 +579,7 @@ class TextWindow extends GraphicWindow {
                 const textWidth = text.length * fontWidth;
                 xPos = (this.width - textWidth) / 2 + (i * fontWidth);
             }
-            this.ctx.drawImage(this, TextWindow.fonts[color], sx, sy, fontWidth, fontHeight, xPos, y, fontWidth, fontHeight);
+            this.ctx.drawImage(this, TextWindow.fonts[color[0]][color[1]], sx, sy, fontWidth, fontHeight, xPos, y, fontWidth, fontHeight);
         }
         this.ctx.blitBuffer();
     }
@@ -634,19 +634,16 @@ class TextWindow extends GraphicWindow {
     }
 
     static fontLoader(font) { 
-        TextWindow.fonts.push(font);
-        for (let j = 0; j < TextWindow.colors.length; j++) {
-            for (let i = 0; i < TextWindow.colors.length; i++) {
-                const colorCode = TextWindow.colors[i];
-                const color = TextWindow.colorCodeConvert(colorCode);
-                const bgcolorCode = TextWindow.colors[j];
-                const bgcolor = TextWindow.colorCodeConvert(bgcolorCode);
-                const convertedFont = TextWindow.convertWhitePixelsToColor(font, color, bgcolor);
+        TextWindow.fonts[0][0] = font;
+        for (let fg = 0; fg < TextWindow.colors.length; fg++) {
+            for (let bg = 0; bg < TextWindow.colors.length; bg++) {
+                const fgColor = TextWindow.colorCodeConvert(TextWindow.colors[fg]);
+                const bgColor = TextWindow.colorCodeConvert(TextWindow.colors[bg]);
+                const convertedFont = TextWindow.convertWhitePixelsToColor(font, fgColor, bgColor);
                 convertedFont.onload = function() {
                     TextWindow.assetsLoaded++;
-                    //console.log(`${TextWindow.assetsLoaded}/256"`);
                 }
-                TextWindow.fonts.push(convertedFont);
+                TextWindow.fonts[fg][bg] = convertedFont;
             }
         }
     }
