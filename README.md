@@ -1,5 +1,5 @@
-# GlitchEngineJS MK1
-First implementation of the GlitchEngineJS.
+# GlitchEngineJS
+Like a terminal but for the web
 
 # Install from-source
 To use the bleeding edge implementation of GlitchEngineJS, add this submodule to your repository and load from the GlitchEngine.js script as seen in our demo. It should look something like `<script src="GE.js" type="module"></script>`.
