@@ -53,9 +53,9 @@ class CanvasWindow {
     }
     
     static blitBuffer() {
-        console.time("blitBuffer");
+        //console.time("blitBuffer");
         this.ctx.drawImage(this.blitCanvas, 8, 8);
-        console.timeEnd("blitBuffer");  
+        //console.timeEnd("blitBuffer");  
     }
 
     static clearScreen() {
@@ -147,7 +147,7 @@ class CanvasWindow {
     }
 
     static fullscreenchanged() {
-        console.log(`Entered Fullscreen`);
+        //console.log(`Entered Fullscreen`);
         CanvasWindow.resizeCanvas();
         CanvasWindow.orientationLock();
     }
