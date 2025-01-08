@@ -11,8 +11,12 @@ We'll update GlitchEngineJS every so often, but our web release *will* be minimi
 
 # Using the Engine
 To call GlitchNetJS in your code, simply create a CanvasWindow object of your required dimensions and include the correct entry point to your program.
+
 `import {CanvasWindow} from 'https://files.glitchtech.top/GE.js';`
-`const canvasWindow = new CanvasWindow(640, 480, main);` (Where main is the entry point to your program i.e. `function main() {};`)
+
+`const canvasWindow = new CanvasWindow(640, 480, main);` 
+
+(Where main is the entry point to your program i.e. `function main() {};`)
 
 
 As of 1/6/2025, GlitchEngine is working on version 0.0.2

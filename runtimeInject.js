@@ -47,37 +47,19 @@ class runtimeInject {
         position: fixed;
         width: 100vw;
         height: 100vh;
-        background-color: lime;
+        background-color: red;
         z-index: 2; /* Ensure it is behind the #white-text */
     }
 
-    #spinner {
-        width: 300px; /* Adjust to match the button size */
-        height: 300px; /* Adjust to match the button size */
-        background-color: #3498db; /* Solid background */
-        position: absolute;
-        top: 40%;
-        left: 40%;
+    b {
+        position: fixed;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
-        border: 5px solid #f3f3f3;
-        border-top: 5px solid #3498db;
-        border-radius: 50%;
-        animation: spin 2s linear infinite;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
-    #spinner p {
+        display: block;
         margin: 0;
-        color: #000;
+        color: #ffffff;
         font-size: 32px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
     }
 
     .hidden {
@@ -116,9 +98,7 @@ class runtimeInject {
     `;
     static html = `
     <div id="black-box">
-        <div id="spinner">
-            <p>GlitchEngineMK1</p>
-        </div>
+        <b>GlitchEngineMK1</b>
         <div class="pixelCon">
             <div class="pixel"></div>
             <div class="pixel"></div>
