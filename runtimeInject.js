@@ -47,7 +47,7 @@ class runtimeInject {
         position: fixed;
         width: 100vw;
         height: 100vh;
-        background-color: red;
+        background-color: black;
         z-index: 2; /* Ensure it is behind the #white-text */
     }
 

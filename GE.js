@@ -47,7 +47,7 @@ class runtimeInject {
         position: fixed;
         width: 100vw;
         height: 100vh;
-        background-color: red;
+        background-color: black;
         z-index: 2; /* Ensure it is behind the #white-text */
     }
 
@@ -519,7 +519,7 @@ class TextWindow extends GraphicWindow {
         "#FFFFFF"  // white 16
     ]; //Picking colors is dark magic now
 
-    constructor(width, height, x, y, rows, cols, editable = false, keyRules = () => {}, text = "") {
+    constructor(width, height, x, y, rows, cols, editable = false, text = "", keyRules = ()=>{}, keyRulesParameters = {},) {
         super(width, height, x, y);
 
         this.rows = rows;
@@ -533,14 +533,16 @@ class TextWindow extends GraphicWindow {
             this.typingOn = true;
         }
         if (keyRules && typeof keyRules === 'function') {
-            this.initKeyControl(keyRules);
+            this.initKeyControl(keyRules, keyRulesParameters);
         }
 
-        //TextWindow.fonts = fonts;
+        for (let i = 0; i < TextWindow.colors.length; i++) {
+            TextWindow.fonts.push([]);
+        }
     }
 
-    initKeyControl(keyRules) {
-        keyRules(this);
+    initKeyControl(keyRules, keyRulesParameters) {
+        keyRules(this, keyRulesParameters);
     }
     
     rowSeperate(text) {
@@ -548,7 +550,7 @@ class TextWindow extends GraphicWindow {
         return rows;
     }
 
-    drawText(text, x, y, color=[15,0], center=false) {
+    drawText(text, x, y, color=[0,0], center=false) {
         const fontWidth = 8;
         const fontHeight = 16;
         const fontCodeMap = [
@@ -633,17 +635,23 @@ class TextWindow extends GraphicWindow {
         return output;
     }
 
-    static fontLoader(font) { 
-        TextWindow.fonts[0][0] = font;
-        for (let fg = 0; fg < TextWindow.colors.length; fg++) {
-            for (let bg = 0; bg < TextWindow.colors.length; bg++) {
-                const fgColor = TextWindow.colorCodeConvert(TextWindow.colors[fg]);
-                const bgColor = TextWindow.colorCodeConvert(TextWindow.colors[bg]);
-                const convertedFont = TextWindow.convertWhitePixelsToColor(font, fgColor, bgColor);
+    static fontLoader(font) {
+        TextWindow.fonts.push([]);
+        TextWindow.fonts[0].push(font);
+        for (let j = 0; j < TextWindow.colors.length; j++) {
+            TextWindow.fonts.push([]);
+            for (let i = 0; i < TextWindow.colors.length; i++) {
+                let arrayRef = TextWindow.fonts[j];
+                const colorCode = TextWindow.colors[i];
+                const color = TextWindow.colorCodeConvert(colorCode);
+                const bgcolorCode = TextWindow.colors[j];
+                const bgcolor = TextWindow.colorCodeConvert(bgcolorCode);
+                const convertedFont = TextWindow.convertWhitePixelsToColor(font, color, bgcolor);
                 convertedFont.onload = function() {
                     TextWindow.assetsLoaded++;
+                    //console.log(`${TextWindow.assetsLoaded}/256"`);
                 }
-                TextWindow.fonts[fg][bg] = convertedFont;
+                arrayRef.push(convertedFont);
             }
         }
     }

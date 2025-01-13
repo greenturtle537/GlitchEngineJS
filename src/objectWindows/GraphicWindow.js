@@ -6,12 +6,20 @@ class GraphicWindow {
     width = 0;
     height = 0;
     
-    constructor(width, height, x, y) {
+    /* Example call:
+    /  const graphicWindow = new GraphicWindow({
+    /      width: 100,
+    /      height: 100,
+    /      x: 0,
+    /      y: 0
+    /  });
+    */
+    constructor(object) {
         this.ctx = CanvasWindow;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
+        this.width = object.width;
+        this.height = object.height;
+        this.x = object.x;
+        this.y = object.y;
     }
 
     clearScreen() {
