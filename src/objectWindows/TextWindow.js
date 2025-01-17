@@ -54,14 +54,25 @@ class TextWindow extends GraphicWindow {
     */
 
     constructor(obj) {
-        super(obj.width, obj.height, obj.x, obj.y);
+        super(
+            {
+                width: obj.width,
+                height: obj.height,
+                x: obj.x,
+                y: obj.y
+            }
+        );
 
         this.rows = obj.rows;
         this.cols = obj.cols;
         this.editable = obj.editable;
+        this.rawText = obj.text
         this.text = this.rowSeperate(obj.text);
-        if (obj.text !== "") {
-            this.drawText(this.text, obj.x, obj.y);
+        console.log(obj.text);
+        if (obj.text != "") {
+            for(var i = 0; i < this.text.length; i++) {
+                this.drawText(this.text[i], obj.x, obj.y + (i * 16));
+            }
         }
         if (obj.editable[0] === true) {
             this.typingOn = true;
@@ -80,7 +91,8 @@ class TextWindow extends GraphicWindow {
     }
     
     rowSeperate(text) {
-        const rows = text.split("\n");
+        let rows = [];
+        rows = text.split("\n");
         return rows;
     }
 
